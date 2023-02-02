@@ -62,14 +62,13 @@ impl Token {
 
 pub fn lookup_identifier_type(identifier: &str) -> TokenType {
     match identifier {
-        "fn" => TokenType::Function,
-        "let" => TokenType::Let,
-        "true" => TokenType::True,
-        "false" => TokenType::False,
-        "if" => TokenType::If,
-        "else" => TokenType::Else,
-        "return" => TokenType::Return,
-        _ => TokenType::String
+        "fn" => return TokenType::Function,
+        "let" => return TokenType::Let,
+        "true" => return TokenType::True,
+        "false" => return TokenType::False,
+        "if" => return TokenType::If,
+        "else" => return TokenType::Else,
+        "return" => return TokenType::Return,
+        _ => return TokenType::Identifier
     };
-	TokenType::Identifier
 }
