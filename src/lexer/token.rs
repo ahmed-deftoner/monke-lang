@@ -1,3 +1,5 @@
+
+#[derive(Debug)]
 pub enum TokenType {
     Illegal,
 	EOF,
@@ -42,22 +44,23 @@ pub enum TokenType {
 	Return
 }
 
+#[derive(Debug)]
 pub struct Token {
     pub Type: TokenType,
-    pub Literal: String
+    pub literal: String
 }
 
 impl Token {
-    fn new(Type: TokenType, Literal: String) -> Token {
+    fn new(Type: TokenType, literal: String) -> Token {
         Self {
             Type,
-            Literal,
+            literal,
         }
     }
 }
 
 
-pub fn LookupIdentifierType(identifier: &str) -> TokenType {
+pub fn lookup_identifier_type(identifier: &str) -> TokenType {
     match identifier {
         "fn" => TokenType::Function,
         "let" => TokenType::Let,
@@ -66,7 +69,7 @@ pub fn LookupIdentifierType(identifier: &str) -> TokenType {
         "if" => TokenType::If,
         "else" => TokenType::Else,
         "return" => TokenType::Return,
-        _ => unreachable!()
+        _ => TokenType::String
     };
 	TokenType::Identifier
 }
