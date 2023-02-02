@@ -1,13 +1,11 @@
-use std::collections::HashMap;
-
-enum TokenType {
+pub enum TokenType {
     Illegal,
 	EOF,
 
 	// Identifiers + Literals
-	Identifier(String),
-	Int(i32),
-	String(String),
+	Identifier,
+	Int,
+	String,
 
 	// Operators
 	Assign,   
@@ -44,8 +42,31 @@ enum TokenType {
 	Return
 }
 
-struct Token {
-    Type: TokenType,
-    Literal: String
+pub struct Token {
+    pub Type: TokenType,
+    pub Literal: String
 }
 
+impl Token {
+    fn new(Type: TokenType, Literal: String) -> Token {
+        Self {
+            Type,
+            Literal,
+        }
+    }
+}
+
+
+pub fn LookupIdentifierType(identifier: &str) -> TokenType {
+    match identifier {
+        "fn" => TokenType::Function,
+        "let" => TokenType::Let,
+        "true" => TokenType::True,
+        "false" => TokenType::False,
+        "if" => TokenType::If,
+        "else" => TokenType::Else,
+        "return" => TokenType::Return,
+        _ => unreachable!()
+    };
+	TokenType::Identifier
+}
