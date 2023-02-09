@@ -145,7 +145,7 @@ impl Lexer {
                     tok.Type = TokenType::Int;
                     return tok;
                 } else {
-                    tok = Self::new_token(TokenType::Illegal, self.ch);
+                    tok = Self::new_token(TokenType::EOF, '/');
                 }
             }
 
