@@ -1,6 +1,8 @@
 package parser
 
 import (
+	"fmt"
+
 	"github.com/ahmed-deftoner/monke-lang/ast"
 	"github.com/ahmed-deftoner/monke-lang/lexer"
 	"github.com/ahmed-deftoner/monke-lang/tokens"
@@ -16,7 +18,7 @@ type Parser struct {
 
 func New(l *lexer.Lexer) *Parser  {
     p := &Parser{
-        l: l
+        l: l,
         errors: []string{},
     }
     p.NextToken()
@@ -33,7 +35,7 @@ func (p *Parser) Errors() []string {
     return p.errors
 }
 
-func (p *Parser) peekError(t token.TokenType) {
+func (p *Parser) peekError(t tokens.TokenType) {
     msg := fmt.Sprintf("expected next token to be %s, got %s instead",
     t, p.peekToken.Type)
     p.errors = append(p.errors, msg)
@@ -70,30 +72,30 @@ func (p *Parser) ParseLet() *ast.LetStatement {
         return nil
     }
 
-    stmt.Name = &ast.Identifier{Token: p.currToken, Value: p.currToken.Literal}
+    stmt.Name = ast.Identifier{Token: p.currToken, Value: p.currToken.Literal}
 
     if !p.expectPeek(tokens.ASSIGN) {
         return nil
     }
 
-    for !p.curTokenIs(token.SEMICOLON) {
-        p.nextToken()
+    for !p.curTokenIs(tokens.SEMICOLON) {
+        p.NextToken()
     }
 
     return &stmt
 }
 
-func (p *Parser) curTokenIs(t token.TokenType) bool {
-    return p.curToken.Type == t
+func (p *Parser) curTokenIs(t tokens.TokenType) bool {
+    return p.currToken.Type == t
 }
 
-func (p *Parser) peekTokenIs(t token.TokenType) bool {
+func (p *Parser) peekTokenIs(t tokens.TokenType) bool {
     return p.peekToken.Type == t
 }
 
-func (p *Parser) expectPeek(t token.TokenType) bool {
+func (p *Parser) expectPeek(t tokens.TokenType) bool {
     if p.peekTokenIs(t) {
-        p.nextToken()
+        p.NextToken()
         return true
     } else {
         return false
