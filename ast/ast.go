@@ -89,6 +89,16 @@ func (rs *ReturnStatement) TokenLiteral() string {
     return rs.Token.Literal
 }
 
+func (rs *ReturnStatement) String() string {
+    var out bytes.Buffer
+    out.WriteString(rs.TokenLiteral() + " ")
+    if rs.ReturnVal != nil {
+        out.WriteString(rs.ReturnVal.String())
+    }
+    out.WriteString(";")
+    return out.String()
+}
+
 type ExpressionStatement struct {
     Token tokens.Token // the first token of the expression
     Expression Expression
